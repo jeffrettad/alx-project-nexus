@@ -12,13 +12,13 @@ const WelcomeScreen = (props: Props) => {
   return (
     <>
     <Stack.Screen options={{headerShown: false}}/>
-    <ImageBackground source={require('@/assets/images/ecommerce-splash.jpg')}
+    <ImageBackground source={require('@/assets/images/ecommerce-splash.png')}
     style={{flex: 1}} resizeMode="cover">
     
     <View style={styles.container}>
     <LinearGradient colors={["transparent", 'rgba(255, 255, 255, 0.9)', 'rgba(255, 255, 255, 1)']} style={styles.background}>
     <View style={styles.wrapper}> 
-      <Animated.Text style={styles.title} entering={FadeInRight.delay(500).duration(300)}>ShopDex</Animated.Text>
+      <Animated.Text style={styles.title} entering={FadeInRight.delay(500).duration(300)}>Dex</Animated.Text>
       
       <Animated.Text style={styles.description} entering={FadeInLeft.delay(500).duration(300)}> We sell high-quality items.</Animated.Text>
 

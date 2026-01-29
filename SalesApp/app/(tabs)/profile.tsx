@@ -8,7 +8,7 @@ const ProfileScreen = (props: Props) => {
   const user = {
     name: "Adedokun Adesoye ",
     email: "adedokunadesoye@gmail.com",
-    profilePicture: " https://imgur.com/a/VR3rljB",
+    profilePicture: "https://imgur.com/a/VR3rljB.png",
   };
   return (
     <View style={styles.container}>
