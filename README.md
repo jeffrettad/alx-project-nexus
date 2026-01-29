@@ -16,15 +16,7 @@ This is a React Native e-commerce app designed to showcase product listings, all
 - Expo: A toolset for building React Native applications.
 
 ## API Integration
-- API Endpoint: https://fakestoreapi.com/products
-The products are fetched from the Fake Store API, which provides a mock product catalog. This API returns a list of products with attributes such as:
-
-- id: The unique identifier for the product.
-- title: The name of the product.
-- price: The price of the product.
-- description: A brief description of the product.
-- image: A URL for the product image.
-
+-
 ## Key Components
 1. HomeScreen.tsx
 This screen fetches product data from an external API (https://fakestoreapi.com/products) and displays a list of products. Each product can be added to the shopping cart.
