@@ -1,11 +1,10 @@
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import React, { useState } from 'react';
-import { Link, Stack } from 'expo-router';
+import { Link, Stack, router } from 'expo-router';
 import FieldInput from '@/components/FieldInput';
 import SocialBtn from '@/components/SocialBtn';
 import { Colors } from '@/constants/Colors';
 import { Picker } from '@react-native-picker/picker';
-import { Ionicons } from '@expo/vector-icons';
 
 type Props = {};
 
@@ -28,10 +27,14 @@ const SignUpScreen = (props: Props) => {
       return;
     }
 
-    // Prepare data for backend
     const signupData = { fullName, email, password, gender };
     console.log('Signup data ready to send:', signupData);
-    alert('Account created! (Ready for backend integration)');
+
+    // ✅ Navigate to verification screen
+    router.push({
+      pathname: '/verify',
+      params: { email },
+    });
   };
 
   return (
