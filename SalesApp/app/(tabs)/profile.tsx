@@ -1,26 +1,71 @@
-import React from 'react';
-import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native';
+import React, { useEffect } from 'react';
+import { StyleSheet, Text, View, Image, TouchableOpacity, Alert } from 'react-native';
+import { useDispatch, useSelector } from 'react-redux';
+import { router } from 'expo-router';
 import { Colors } from '@/constants/Colors';
-type Props = {};
+import type { RootState, AppDispatch } from '../../redux/store';
+import { fetchProfile, logout } from '../../redux/authSlice';
+import { logout as logoutApi } from '../../services/authService';
 
-const ProfileScreen = (props: Props) => {
-  // Placeholder user data
-  const user = {
-    name: "Adedokun Adesoye ",
-    email: "adedokunadesoye@gmail.com",
-    profilePicture: "https://imgur.com/a/VR3rljB.png",
+const ProfileScreen = () => {
+  const dispatch = useDispatch<AppDispatch>();
+
+  const { user, access, refresh, loading } = useSelector(
+    (state: RootState) => state.auth
+  );
+
+  // Load profile when screen opens (if not already loaded)
+  useEffect(() => {
+    if (access && !user) {
+      dispatch(fetchProfile(access));
+    }
+  }, [access]);
+
+  const handleLogout = async () => {
+    try {
+      if (refresh) {
+        await logoutApi(refresh); // Call your /auth/logout/
+      }
+
+      dispatch(logout()); // Clear Redux
+      router.dismissAll();
+      router.push('/signin');
+    } catch (error) {
+      Alert.alert("Logout Error", "You have been logged out locally.");
+      dispatch(logout());
+      router.push('/signin');
+    }
   };
+
+  // While loading profile
+  if (loading && !user) {
+    return (
+      <View style={[styles.container, { justifyContent: 'center' }]}>
+        <Text>Loading profile...</Text>
+      </View>
+    );
+  }
+
   return (
     <View style={styles.container}>
       {/* Profile Picture */}
-      <Image source={{ uri: user.profilePicture }} style={styles.profileImage} />
-      
+      <Image
+        source={{
+          uri:
+            user?.profile_picture ||
+            "https://www.gravatar.com/avatar/?d=mp"
+        }}
+        style={styles.profileImage}
+      />
+
       {/* User Name */}
-      <Text style={styles.name}>{user.name}</Text>
-      
+      <Text style={styles.name}>
+        {user?.first_name || ''} {user?.last_name || ''}
+      </Text>
+
       {/* User Email */}
-      <Text style={styles.email}>{user.email}</Text>
-      
+      <Text style={styles.email}>{user?.email}</Text>
+
       {/* Buttons/Actions */}
       <TouchableOpacity style={styles.button}>
         <Text style={styles.buttonText}>Edit Profile</Text>
@@ -34,7 +79,10 @@ const ProfileScreen = (props: Props) => {
         <Text style={styles.buttonText}>Change Password</Text>
       </TouchableOpacity>
 
-      <TouchableOpacity style={[styles.button, styles.logoutButton]}>
+      <TouchableOpacity
+        style={[styles.button, styles.logoutButton]}
+        onPress={handleLogout}
+      >
         <Text style={styles.buttonText}>Log Out</Text>
       </TouchableOpacity>
     </View>
@@ -42,6 +90,7 @@ const ProfileScreen = (props: Props) => {
 };
 
 export default ProfileScreen;
+
 
 const styles = StyleSheet.create({
   container: {

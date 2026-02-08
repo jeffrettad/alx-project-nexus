@@ -41,7 +41,7 @@ const CartScreen = () => {
 
       <View style={styles.cartDetails}>
         <Text style={styles.cartItemTitle}>{item.title}</Text>
-        <Text style={styles.cartItemPrice}>₦{item.price}</Text>
+        <Text style={styles.cartItemPrice}>${item.price}</Text>
         <Text style={styles.cartItemQuantity}>Quantity: {item.quantity}</Text>
         
         {/* Buttons container */}

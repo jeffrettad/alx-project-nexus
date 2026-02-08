@@ -65,7 +65,7 @@ const ExploreScreen = () => {
       {/* Display Product Image */}
       <Image source={{ uri: item.image }} style={styles.productImage} />
       <Text style={styles.productTitle}>{item.title}</Text>
-      <Text style={styles.productPrice}>${item.price}</Text>
+      <Text style={styles.productPrice}> ₦{item.price}</Text>
       <TouchableOpacity
         style={styles.addToCartButton}
         onPress={() => handleAddToCart(item)}
